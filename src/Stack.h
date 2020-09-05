@@ -79,7 +79,9 @@ T Stack<T>::pop()
 {
     if(isEmpty())
         throw std::logic_error("stack is empty");
-    return stack[head--];
+    T t = stack[head];
+    --head;
+    return t;
 }
 
 template<typename T>
@@ -101,7 +103,8 @@ void Stack<T>::compound(Stack<T> _stack)
 {
     if(head + 1 + _stack.size() > MAX_SIZE)
         throw std::logic_error("no place for item");
-    for(int i = 0; i < _stack.size(); ++i)
+    int temp = _stack.size();
+    for(int i = 0; i < temp; ++i)
         push(_stack.pop());
 }
 

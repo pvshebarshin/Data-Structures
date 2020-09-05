@@ -59,7 +59,7 @@ TEST(Stack, PopNothingTest)
     EXPECT_THROW(st.pop(), std::logic_error);
 }
 
-TEST(IntStack, TopTest)
+TEST(Stack, TopTest)
 {
     Stack<int> st;
     EXPECT_TRUE(st.isEmpty());
@@ -74,7 +74,7 @@ TEST(IntStack, TopTest)
     EXPECT_TRUE(st.isEmpty());
 }
 
-TEST(IntStack, ClearTest)
+TEST(Stack, ClearTest)
 {
     Stack<int> st(5);
     EXPECT_TRUE(st.isEmpty());
@@ -90,4 +90,28 @@ TEST(IntStack, ClearTest)
     st.clear();
     EXPECT_TRUE(st.isEmpty());
     EXPECT_FALSE(st.isFull());
+}
+
+TEST(Stack, SizeTest)
+{
+    Stack<int> st(5);
+    st.push(5);
+    st.push(2);
+    st.push(32);
+    EXPECT_EQ(st.size(), 3);
+}
+
+TEST(Stack, CompoundTest)
+{
+    Stack<int> st1(10);
+    Stack<int> st2(4);
+    st1.push(1);
+    st1.push(2);
+    st1.push(3);
+
+    st2.push(4);
+    st2.push(5);
+    st2.push(6);
+    st1.compound(st2);
+    EXPECT_EQ(st1.size(), 6);
 }
