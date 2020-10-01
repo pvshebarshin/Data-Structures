@@ -1,5 +1,5 @@
-#ifndef STACK_STACK_H
-#define STACK_STACK_H
+#ifndef STACK_H
+#define STACK_H
 #include <stdexcept>
 template<typename T>
 class Stack
@@ -79,9 +79,7 @@ T Stack<T>::pop()
 {
     if(isEmpty())
         throw std::logic_error("stack is empty");
-    T t = stack[head];
-    --head;
-    return t;
+    return stack[head--];
 }
 
 template<typename T>
