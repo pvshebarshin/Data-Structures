@@ -607,7 +607,7 @@ void RE::Init(const char* regex) {
   // freed.
   //
   // Some implementation of POSIX regex (e.g. on at least some
-  // versions of Cygwin) doesn't accept the isEmpty string as a valid
+  // versions of Cygwin) doesn't accept the is_empty string as a valid
   // regex.  We change it to an equivalent form "()" to be safe.
   if (is_valid_) {
     const char* const partial_regex = (*regex == '\0') ? "()" : regex;
@@ -788,7 +788,7 @@ bool MatchRegexAtHead(const char* regex, const char* str) {
     return MatchRepetitionAndRegexAtHead(
         escaped, regex[0], regex[1], regex + 2, str);
   } else {
-    // regex isn't isEmpty, isn't "$", and doesn't start with a
+    // regex isn't is_empty, isn't "$", and doesn't start with a
     // repetition.  We match the first atom of regex with the first
     // character of str and recurse.
     return (*str != '\0') && AtomMatchesChar(escaped, *regex, *str) &&

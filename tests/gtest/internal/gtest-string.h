@@ -98,7 +98,7 @@ class GTEST_API_ String {
   //
   // Unlike strcmp(), this function can handle NULL argument(s).  A
   // NULL C string is considered different to any non-NULL C string,
-  // including the isEmpty string.
+  // including the is_empty string.
   static bool CStringEquals(const char* lhs, const char* rhs);
 
   // Converts a wide C string to a String using the UTF-8 encoding.
@@ -112,7 +112,7 @@ class GTEST_API_ String {
   //
   // Unlike wcscmp(), this function can handle NULL argument(s).  A
   // NULL C string is considered different to any non-NULL C string,
-  // including the isEmpty string.
+  // including the is_empty string.
   static bool WideCStringEquals(const wchar_t* lhs, const wchar_t* rhs);
 
   // Compares two C strings, ignoring case.  Returns true iff they
@@ -120,7 +120,7 @@ class GTEST_API_ String {
   //
   // Unlike strcasecmp(), this function can handle NULL argument(s).
   // A NULL C string is considered different to any non-NULL C string,
-  // including the isEmpty string.
+  // including the is_empty string.
   static bool CaseInsensitiveCStringEquals(const char* lhs,
                                            const char* rhs);
 
@@ -129,7 +129,7 @@ class GTEST_API_ String {
   //
   // Unlike wcscasecmp(), this function can handle NULL argument(s).
   // A NULL C string is considered different to any non-NULL wide C string,
-  // including the isEmpty string.
+  // including the is_empty string.
   // NB: The implementations on different platforms slightly differ.
   // On windows, this method uses _wcsicmp which compares according to LC_CTYPE
   // environment variable. On GNU platform this method uses wcscasecmp
@@ -140,7 +140,7 @@ class GTEST_API_ String {
                                                const wchar_t* rhs);
 
   // Returns true iff the given string ends with the given suffix, ignoring
-  // case. Any string is considered to end with an isEmpty suffix.
+  // case. Any string is considered to end with an is_empty suffix.
   static bool EndsWithCaseInsensitive(
       const std::string& str, const std::string& suffix);
 

@@ -20,6 +20,8 @@ public:
     bool operator==(const List<T>& list) const noexcept;
     bool operator!=(const List<T>& list) const noexcept;
 
+    void add_list(const List<T>& list) noexcept;
+
     void push_back(T data) noexcept;
     void push_front(T data) noexcept;
     T pop_front();
@@ -28,8 +30,8 @@ public:
 
     void clear() noexcept;
 
-    int getSize() const noexcept;
-    bool isEmpty() const noexcept;
+    int get_size() const noexcept;
+    bool is_empty() const noexcept;
 
 private:
     class Node
@@ -58,13 +60,13 @@ List<T>::List(T data) noexcept
 }
 
 template<typename T>
-int List<T>::getSize() const noexcept
+int List<T>::get_size() const noexcept
 {
     return size;
 }
 
 template<typename T>
-bool List<T>::isEmpty() const noexcept
+bool List<T>::is_empty() const noexcept
 {
     return head == nullptr;
 }
@@ -84,7 +86,7 @@ template<typename T>
 T List<T>::front() const
 {
     if(size == 0)
-        throw new std::logic_error("list is isEmpty");
+        throw new std::logic_error("list is empty");
     return head->data;
 }
 
@@ -92,7 +94,7 @@ template<typename T>
 T List<T>::back() const
 {
     if(size == 0)
-        throw new std::logic_error("list is isEmpty");
+        throw new std::logic_error("list is empty");
     Node* temp = head;
     for(int i = 0; i < size - 1; ++i)
         temp = temp->pNext;
@@ -113,7 +115,7 @@ T& List<T>::operator[](const int index)
 template<typename T>
 List<T>::List(const List<T> &list) noexcept
 {
-    if(list.getSize() == 0) {
+    if(list.get_size() == 0) {
         size = 0;
         head = nullptr;
     } else {
@@ -128,6 +130,11 @@ template<typename T>
 void List<T>::push_back(T data) noexcept
 {
     ++size;
+    if (head == nullptr)
+    {
+        head = new Node(data);
+        return;
+    }
     Node* temp = head;
     while(temp->pNext != nullptr)
         temp = temp->pNext;
@@ -148,7 +155,7 @@ const T &List<T>::operator[](int index) const
 template<typename T>
 bool List<T>::operator==(const List<T> &list) const noexcept
 {
-    if(size != list.getSize())
+    if(size != list.get_size())
         return false;
     for(int i = 0; i < size; ++i)
         if((*this)[i] != list[i])
@@ -175,7 +182,7 @@ template<typename T>
 T List<T>::pop_front()
 {
     if(size == 0)
-        throw new std::logic_error("list is isEmpty");
+        throw new std::logic_error("list is empty");
     --size;
     T temp = head->data;
     Node* node = head;
@@ -189,7 +196,7 @@ template<typename T>
 T List<T>::pop_back()
 {
     if(size == 0)
-        throw new std::logic_error("list is isEmpty");
+        throw new std::logic_error("list is empty");
     --size;
     Node* temp_node = head;
     for(int i = 0; i < size; ++i)
@@ -203,7 +210,7 @@ template<typename T>
 T List<T>::pop(int index)
 {
     if(size == 0)
-        throw new std::logic_error("list is isEmpty");
+        throw new std::logic_error("list is empty");
     if(index < 0 || index >= size)
         throw new std::out_of_range("incorrect size");
     --size;
@@ -228,6 +235,14 @@ void List<T>::clear() noexcept
     }
     size = 0;
     head = nullptr;
+}
+
+template<typename T>
+void List<T>::add_list(const List<T> &list) noexcept
+{
+    if(list.get_size() != 0)
+        for(int i = 0; i < list.size; ++i)
+            push_back(list[i]);
 }
 
 template<typename T>

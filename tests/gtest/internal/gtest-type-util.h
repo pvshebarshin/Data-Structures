@@ -114,7 +114,7 @@ struct None {};
 // Head for the first type in the list, and Tail for the rest of the
 // list.
 
-// The isEmpty type list.
+// The is_empty type list.
 struct Types0 {};
 
 // Type lists of length 1, 2, 3, and so on.
@@ -1654,7 +1654,7 @@ struct NoneT {};
 // Head for the selector of the first template in the list, and Tail
 // for the rest of the list.
 
-// The isEmpty template list.
+// The is_empty template list.
 struct Templates0 {};
 
 // Template lists of length 1, 2, 3, and so on.

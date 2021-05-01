@@ -3,31 +3,31 @@
 
 TEST(List, simpleTest)
 {
-    List<int>* list = new List<int>();
+    auto* list = new List<int>();
     EXPECT_TRUE(list != nullptr);
     delete list;
 }
 
 TEST(List, constructorTest)
 {
-    List<int>* list = new List<int>(4);
+    auto* list = new List<int>(4);
     EXPECT_TRUE(list != nullptr);
     EXPECT_TRUE(list->front() == 4);
     EXPECT_TRUE(list->back() == 4);
-    EXPECT_TRUE(list->getSize() == 1);
-    EXPECT_FALSE(list->isEmpty());
+    EXPECT_TRUE(list->get_size() == 1);
+    EXPECT_FALSE(list->is_empty());
     delete list;
 }
 
 TEST(List, push_backTest)
 {
-    List<int>* list = new List<int>(6);
+    auto* list = new List<int>(6);
     list->push_back(1);
     list->push_back(44);
     list->push_back(13);
     list->push_back(666);
-    EXPECT_TRUE(list->getSize() == 5);
-    EXPECT_FALSE(list->isEmpty());
+    EXPECT_TRUE(list->get_size() == 5);
+    EXPECT_FALSE(list->is_empty());
     EXPECT_TRUE(list->front() == 6);
     EXPECT_TRUE(list->back() == 666);
     delete list;
@@ -35,7 +35,7 @@ TEST(List, push_backTest)
 
 TEST(List, indexTest)
 {
-    List<int>* list = new List<int>(6);
+    auto* list = new List<int>(6);
     list->push_back(1);
     list->push_back(44);
     list->push_back(13);
@@ -47,13 +47,13 @@ TEST(List, indexTest)
     EXPECT_TRUE((*list)[4] == 666);
 
     EXPECT_ANY_THROW((*list)[-11]);
-    EXPECT_ANY_THROW((*list)[list->getSize()]);
+    EXPECT_ANY_THROW((*list)[list->get_size()]);
     EXPECT_ANY_THROW((*list)[100000]);
 
     (*list)[0] = 1481;
-    (*list)[list->getSize() - 1] = 10;
+    (*list)[list->get_size() - 1] = 10;
     EXPECT_EQ((*list)[0], 1481);
-    EXPECT_EQ((*list)[list->getSize() - 1], 10);
+    EXPECT_EQ((*list)[list->get_size() - 1], 10);
 
     delete list;
 }
@@ -117,7 +117,7 @@ TEST(List, push_frontTest)
     list.push_front(69);
     EXPECT_EQ(list.front(), 69);
     EXPECT_EQ(list.front(), list[0]);
-    EXPECT_TRUE(list.getSize() == 6);
+    EXPECT_TRUE(list.get_size() == 6);
 }
 
 TEST(List, pop_frontTest)
@@ -125,24 +125,24 @@ TEST(List, pop_frontTest)
     List<int> list(6);
     list.push_back(1);
     list.push_back(44);
-    EXPECT_TRUE(list.getSize() == 3);
+    EXPECT_TRUE(list.get_size() == 3);
     EXPECT_EQ(list.front(), 6);
     EXPECT_EQ(list.front(), list[0]);
 
     int x = list.pop_front();
-    EXPECT_TRUE(list.getSize() == 2);
+    EXPECT_TRUE(list.get_size() == 2);
     EXPECT_EQ(list.front(), 1);
     EXPECT_EQ(list.front(), list[0]);
     EXPECT_EQ(x, 6);
 
     x = list.pop_front();
-    EXPECT_TRUE(list.getSize() == 1);
+    EXPECT_TRUE(list.get_size() == 1);
     EXPECT_EQ(list.front(), 44);
     EXPECT_EQ(list.front(), list[0]);
     EXPECT_EQ(x, 1);
 
     x = list.pop_front();
-    EXPECT_TRUE(list.getSize() == 0);
+    EXPECT_TRUE(list.get_size() == 0);
     EXPECT_ANY_THROW(list.front());
     EXPECT_ANY_THROW(list.back());
     EXPECT_ANY_THROW(list[0]);
@@ -155,27 +155,70 @@ TEST(List, pop_backTest)
     List<int> list(6);
     list.push_back(1);
     list.push_back(44);
-    EXPECT_TRUE(list.getSize() == 3);
+    EXPECT_TRUE(list.get_size() == 3);
     EXPECT_EQ(list.back(), 44);
-    EXPECT_EQ(list.back(), list[list.getSize() - 1]);
+    EXPECT_EQ(list.back(), list[list.get_size() - 1]);
 
     int x = list.pop_back();
-    EXPECT_TRUE(list.getSize() == 2);
+    EXPECT_TRUE(list.get_size() == 2);
     EXPECT_EQ(list.back(), 1);
-    EXPECT_EQ(list.back(), list[list.getSize() - 1]);
+    EXPECT_EQ(list.back(), list[list.get_size() - 1]);
     EXPECT_EQ(44, x);
 
     x = list.pop_back();
-    EXPECT_TRUE(list.getSize() == 1);
+    EXPECT_TRUE(list.get_size() == 1);
     EXPECT_EQ(list.back(), 6);
-    EXPECT_EQ(list.back(), list[list.getSize() - 1]);
+    EXPECT_EQ(list.back(), list[list.get_size() - 1]);
     EXPECT_EQ(1, x);
 
     x = list.pop_back();
-    EXPECT_TRUE(list.getSize() == 0);
+    EXPECT_TRUE(list.get_size() == 0);
     EXPECT_EQ(6, x);
     EXPECT_ANY_THROW(list.back());
     EXPECT_ANY_THROW(list[0]);
     EXPECT_ANY_THROW(list[44]);
     EXPECT_ANY_THROW(list[-44]);
+}
+
+TEST(List, clearTest)
+{
+    auto *list = new List<int>();
+    list->push_back(1);
+    list->push_back(44);
+    EXPECT_EQ(2, list->get_size());
+
+    list->clear();
+    EXPECT_TRUE(list->is_empty());
+    EXPECT_EQ(0, list->get_size());
+
+    list->push_back(1);
+    list->push_back(44);
+    EXPECT_EQ(2, list->get_size());
+    delete list;
+}
+
+TEST(List, addListTest)
+{
+    List<int> list(6);
+    list.push_back(1);
+    list.push_back(44);
+    EXPECT_EQ(list.get_size(), 3);
+
+    List<int> new_list(2);
+    new_list.push_back(4);
+
+    list.add_list(new_list);
+    EXPECT_EQ(5, list.get_size());
+    EXPECT_EQ(4, list.back());
+    EXPECT_EQ(4, list[list.get_size() - 1]);
+    EXPECT_EQ(6, list.front());
+    EXPECT_EQ(6, list[0]);
+
+    List<int> new_list2(666);
+    new_list2.push_front(333);
+
+    list.add_list(new_list2);
+    EXPECT_EQ(666, list.back());
+
+    EXPECT_EQ(2, new_list.get_size());
 }

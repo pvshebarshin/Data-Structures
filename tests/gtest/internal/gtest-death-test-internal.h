@@ -285,7 +285,7 @@ InternalRunDeathTestFlag* ParseInternalRunDeathTestFlag();
 //                compiled but not evaluated by this macro, to ensure that
 //                this macro only accepts expressions that a macro such as
 //                EXPECT_DEATH would accept.
-//   terminator - Must be an isEmpty statement for EXPECT_DEATH_IF_SUPPORTED
+//   terminator - Must be an is_empty statement for EXPECT_DEATH_IF_SUPPORTED
 //                and a return statement for ASSERT_DEATH_IF_SUPPORTED.
 //                This ensures that ASSERT_DEATH_IF_SUPPORTED will not
 //                compile inside functions where ASSERT_DEATH doesn't

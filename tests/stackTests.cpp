@@ -11,41 +11,41 @@ TEST(Stack, simpleTest)
 TEST(Stack, EmtpyFullTest)
 {
     Stack<float> stack(10);
-    EXPECT_TRUE(stack.isEmpty());
-    EXPECT_FALSE(stack.isFull());
+    EXPECT_TRUE(stack.is_empty());
+    EXPECT_FALSE(stack.is_full());
 }
 
 TEST(Stack, PushPopTest)
 {
     Stack<int> st;
-    EXPECT_TRUE(st.isEmpty());
+    EXPECT_TRUE(st.is_empty());
 
     int v1 = 402;
     int v2 = 103;
     int v3 = 6067;
 
     st.push(v1);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
     st.push(v2);
     st.push(v3);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
     EXPECT_EQ(st.pop(), v3);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
     EXPECT_EQ(st.pop(), v2);
     EXPECT_EQ(st.pop(), v1);
-    EXPECT_TRUE(st.isEmpty());
+    EXPECT_TRUE(st.is_empty());
 }
 
 TEST(Stack, OverFlowTest)
 {
     Stack<long long> st(1);
 
-    EXPECT_TRUE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_TRUE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
 
     st.push(421);
-    EXPECT_FALSE(st.isEmpty());
-    EXPECT_TRUE(st.isFull());
+    EXPECT_FALSE(st.is_empty());
+    EXPECT_TRUE(st.is_full());
 
     EXPECT_THROW(st.push(113), std::logic_error);
 }
@@ -54,42 +54,42 @@ TEST(Stack, PopNothingTest)
 {
     Stack<double> st;
 
-    EXPECT_TRUE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_TRUE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
     EXPECT_THROW(st.pop(), std::logic_error);
 }
 
 TEST(Stack, TopTest)
 {
     Stack<int> st;
-    EXPECT_TRUE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_TRUE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
 
     int v1 = 412;
     st.push(v1);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
     EXPECT_EQ(st.top(), v1);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
     EXPECT_EQ(st.pop(), v1);
-    EXPECT_TRUE(st.isEmpty());
+    EXPECT_TRUE(st.is_empty());
 }
 
 TEST(Stack, ClearTest)
 {
     Stack<int> st(5);
-    EXPECT_TRUE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_TRUE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
 
     st.push(2);
-    EXPECT_FALSE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_FALSE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
 
     st.push(113);
-    EXPECT_FALSE(st.isEmpty());
+    EXPECT_FALSE(st.is_empty());
 
     st.clear();
-    EXPECT_TRUE(st.isEmpty());
-    EXPECT_FALSE(st.isFull());
+    EXPECT_TRUE(st.is_empty());
+    EXPECT_FALSE(st.is_full());
 }
 
 TEST(Stack, SizeTest)

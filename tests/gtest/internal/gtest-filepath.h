@@ -119,7 +119,7 @@ class GTEST_API_ FilePath {
   // Example: FilePath("path/to/file").RemoveDirectoryName() returns
   // FilePath("file"). If there is no directory part ("just_a_file"), it returns
   // the FilePath unmodified. If there is no file part ("just_a_dir/") it
-  // returns an isEmpty FilePath ("").
+  // returns an is_empty FilePath ("").
   // On Windows platform, '\' is the path separator, otherwise it is '/'.
   FilePath RemoveDirectoryName() const;
 

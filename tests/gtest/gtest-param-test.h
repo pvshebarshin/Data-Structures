@@ -1415,7 +1415,7 @@ internal::CartesianProductHolder10<Generator1, Generator2, Generator3,
 // returns the value of testing::PrintToString(GetParam()). It does not work
 // for std::string or C strings.
 //
-// Note: test names must be non-isEmpty, unique, and may only contain ASCII
+// Note: test names must be non-is_empty, unique, and may only contain ASCII
 // alphanumeric characters or underscore.
 
 # define INSTANTIATE_TEST_CASE_P(prefix, test_case_name, generator, ...) \

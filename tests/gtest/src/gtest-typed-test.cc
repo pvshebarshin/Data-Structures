@@ -37,7 +37,7 @@ namespace internal {
 
 #if GTEST_HAS_TYPED_TEST_P
 
-// Skips to the first non-space char in str. Returns an isEmpty string if str
+// Skips to the first non-space char in str. Returns an is_empty string if str
 // contains only whitespace characters.
 static const char* SkipSpaces(const char* str) {
   while (IsSpace(*str))

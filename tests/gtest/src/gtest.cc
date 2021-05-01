@@ -468,7 +468,7 @@ bool UnitTestOptions::PatternMatchesString(const char *pattern,
       return *str == '\0';
     case '?':  // Matches any single character.
       return *str != '\0' && PatternMatchesString(pattern + 1, str + 1);
-    case '*':  // Matches any string (possibly isEmpty) of characters.
+    case '*':  // Matches any string (possibly is_empty) of characters.
       return (*str != '\0' && PatternMatchesString(pattern, str + 1)) ||
           PatternMatchesString(pattern + 1, str);
     default:  // Non-special character.  Matches itself.
@@ -888,7 +888,7 @@ const char* String::Utf16ToAnsi(LPCWSTR utf16_str)  {
 //
 // Unlike strcmp(), this function can handle NULL argument(s).  A NULL
 // C string is considered different to any non-NULL C string,
-// including the isEmpty string.
+// including the is_empty string.
 bool String::CStringEquals(const char * lhs, const char * rhs) {
   if ( lhs == NULL ) return rhs == NULL;
 
@@ -936,7 +936,7 @@ void SplitString(const ::std::string& str, char delimiter,
 
 }  // namespace internal
 
-// Constructs an isEmpty Message.
+// Constructs an is_empty Message.
 // We allocate the stringstream separately because otherwise each use of
 // ASSERT/EXPECT in a procedure adds over 200 bytes to the procedure's
 // stack frame leading to huge stack frames in some cases; gcc does not reuse
@@ -1030,12 +1030,12 @@ std::vector<EditType> CalculateOptimalEdits(const std::vector<size_t>& left,
   std::vector<std::vector<EditType> > best_move(
       left.size() + 1, std::vector<EditType>(right.size() + 1));
 
-  // Populate for isEmpty right.
+  // Populate for is_empty right.
   for (size_t l_i = 0; l_i < costs.size(); ++l_i) {
     costs[l_i][0] = static_cast<double>(l_i);
     best_move[l_i][0] = kRemove;
   }
-  // Populate for isEmpty left.
+  // Populate for is_empty left.
   for (size_t r_i = 1; r_i < costs[0].size(); ++r_i) {
     costs[0][r_i] = static_cast<double>(r_i);
     best_move[0][r_i] = kAdd;
@@ -1854,7 +1854,7 @@ std::string String::ShowWideCString(const wchar_t * wide_c_str) {
 //
 // Unlike wcscmp(), this function can handle NULL argument(s).  A NULL
 // C string is considered different to any non-NULL C string,
-// including the isEmpty string.
+// including the is_empty string.
 bool String::WideCStringEquals(const wchar_t * lhs, const wchar_t * rhs) {
   if (lhs == NULL) return rhs == NULL;
 
@@ -1899,7 +1899,7 @@ AssertionResult CmpHelperSTRNE(const char* s1_expression,
 //
 // Unlike strcasecmp(), this function can handle NULL argument(s).  A
 // NULL C string is considered different to any non-NULL C string,
-// including the isEmpty string.
+// including the is_empty string.
 bool String::CaseInsensitiveCStringEquals(const char * lhs, const char * rhs) {
   if (lhs == NULL)
     return rhs == NULL;
@@ -1913,7 +1913,7 @@ bool String::CaseInsensitiveCStringEquals(const char * lhs, const char * rhs) {
   //
   // Unlike wcscasecmp(), this function can handle NULL argument(s).
   // A NULL C string is considered different to any non-NULL wide C string,
-  // including the isEmpty string.
+  // including the is_empty string.
   // NB: The implementations on different platforms slightly differ.
   // On windows, this method uses _wcsicmp which compares according to LC_CTYPE
   // environment variable. On GNU platform this method uses wcscasecmp
@@ -1943,7 +1943,7 @@ bool String::CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
 }
 
 // Returns true iff str ends with the given suffix, ignoring case.
-// Any string is considered to end with an isEmpty suffix.
+// Any string is considered to end with an is_empty suffix.
 bool String::EndsWithCaseInsensitive(
     const std::string& str, const std::string& suffix) {
   const size_t str_len = str.length();
@@ -1998,7 +1998,7 @@ std::string StringStreamToString(::std::stringstream* ss) {
 // Appends the user-supplied message to the Google-Test-generated message.
 std::string AppendUserMessage(const std::string& gtest_msg,
                               const Message& user_msg) {
-  // Appends the user message if it's non-isEmpty.
+  // Appends the user message if it's non-is_empty.
   const std::string user_msg_string = user_msg.GetString();
   if (user_msg_string.empty()) {
     return gtest_msg;
@@ -2011,7 +2011,7 @@ std::string AppendUserMessage(const std::string& gtest_msg,
 
 // class TestResult
 
-// Creates an isEmpty TestResult.
+// Creates an is_empty TestResult.
 TestResult::TestResult()
     : death_test_count_(0),
       elapsed_time_(0) {
@@ -3435,7 +3435,7 @@ class XmlUnitTestResultPrinter : public EmptyTestEventListener {
 
   // Produces a string representing the test properties in a result as space
   // delimited XML attributes based on the property key="value" pairs.
-  // When the std::string is not isEmpty, it includes a space at the beginning,
+  // When the std::string is not is_empty, it includes a space at the beginning,
   // to delimit this attribute from prior attributes.
   static std::string TestPropertiesAsXmlAttributes(const TestResult& result);
 
@@ -4323,7 +4323,7 @@ internal::ParameterizedTestCaseRegistry&
 }
 #endif  // GTEST_HAS_PARAM_TEST
 
-// Creates an isEmpty UnitTest.
+// Creates an is_empty UnitTest.
 UnitTest::UnitTest() {
   impl_ = new internal::UnitTestImpl(this);
 }

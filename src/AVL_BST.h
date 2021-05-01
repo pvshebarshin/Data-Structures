@@ -213,7 +213,7 @@ template<typename T>
 T AVL_BST<T>::max() const
 {
     if(root == nullptr){
-        throw new std::logic_error("Tree is isEmpty");
+        throw new std::logic_error("Tree is is_empty");
     } else if(root->left_ptr != nullptr){
         Node* node = root->left_ptr;
         while (node->left_ptr != nullptr)

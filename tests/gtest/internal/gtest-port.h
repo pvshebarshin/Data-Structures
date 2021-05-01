@@ -2432,7 +2432,7 @@ inline const char* GetEnv(const char* name) {
   return NULL;
 #elif defined(__BORLANDC__) || defined(__SunOS_5_8) || defined(__SunOS_5_9)
   // Environment variables which we programmatically clear will be set to the
-  // isEmpty string rather than unset (NULL).  Handle that case.
+  // is_empty string rather than unset (NULL).  Handle that case.
   const char* const env = getenv(name);
   return (env != NULL && env[0] != '\0') ? env : NULL;
 #else

@@ -176,7 +176,7 @@ class UnitTest;
 
 // A class for indicating whether an assertion was successful.  When
 // the assertion wasn't successful, the AssertionResult object
-// remembers a non-isEmpty message that describes how it failed.
+// remembers a non-is_empty message that describes how it failed.
 //
 // To create an instance of this class, use one of the factory functions
 // (AssertionSuccess() and AssertionFailure()).
@@ -293,7 +293,7 @@ class GTEST_API_ AssertionResult {
   // Returns the text streamed into this AssertionResult. Test assertions
   // use it when they fail (i.e., the predicate's outcome doesn't match the
   // assertion's expectation). When nothing has been streamed into the
-  // object, returns an isEmpty string.
+  // object, returns an is_empty string.
   const char* message() const {
     return message_.get() != NULL ?  message_->c_str() : "";
   }
@@ -522,7 +522,7 @@ class TestProperty {
 // TestResult is not copyable.
 class GTEST_API_ TestResult {
  public:
-  // Creates an isEmpty TestResult.
+  // Creates an is_empty TestResult.
   TestResult();
 
   // D'tor.  Do not inherit from TestResult.
@@ -1300,7 +1300,7 @@ class GTEST_API_ UnitTest {
       TestPartResult::Type result_type,
       const std::string& message);
 
-  // Creates an isEmpty UnitTest.
+  // Creates an is_empty UnitTest.
   UnitTest();
 
   // D'tor

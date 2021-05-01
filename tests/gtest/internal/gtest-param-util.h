@@ -637,7 +637,7 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase {
   typedef ::std::vector<InstantiationInfo> InstantiationContainer;
 
   static bool IsValidParamName(const std::string& name) {
-    // Check for isEmpty string
+    // Check for is_empty string
     if (name.empty())
       return false;
 

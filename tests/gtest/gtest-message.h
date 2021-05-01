@@ -89,7 +89,7 @@ class GTEST_API_ Message {
   typedef std::ostream& (*BasicNarrowIoManip)(std::ostream&);
 
  public:
-  // Constructs an isEmpty Message.
+  // Constructs an is_empty Message.
   Message();
 
   // Copy constructor.

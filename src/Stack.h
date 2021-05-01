@@ -12,8 +12,8 @@ public:
     T pop();
     T top() const;
 
-    bool isFull() const noexcept;
-    bool isEmpty() const noexcept;
+    bool is_full() const noexcept;
+    bool is_empty() const noexcept;
 
     void clear() noexcept;
 
@@ -44,13 +44,13 @@ Stack<T>::~Stack() noexcept
 }
 
 template<typename T>
-bool Stack<T>::isFull() const noexcept
+bool Stack<T>::is_full() const noexcept
 {
     return MAX_SIZE == head + 1;
 }
 
 template<typename T>
-bool Stack<T>::isEmpty() const noexcept
+bool Stack<T>::is_empty() const noexcept
 {
     return head == -1;
 }
@@ -58,7 +58,7 @@ bool Stack<T>::isEmpty() const noexcept
 template<typename T>
 void Stack<T>::push(T item)
 {
-    if(!isFull()) {
+    if(!is_full()) {
         ++head;
         stack[head] = item;
     } else {
@@ -77,17 +77,17 @@ void Stack<T>::clear() noexcept
 template<typename T>
 T Stack<T>::pop()
 {
-    if(isEmpty())
-        throw std::logic_error("stack is isEmpty");
+    if(is_empty())
+        throw std::logic_error("stack is empty");
     return stack[head--];
 }
 
 template<typename T>
 T Stack<T>::top() const
 {
-    if(!isEmpty())
+    if(!is_empty())
         return stack[head];
-    throw std::logic_error("stack is isEmpty");
+    throw std::logic_error("stack is empty");
 }
 
 template<typename T>
