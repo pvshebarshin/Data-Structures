@@ -19,7 +19,7 @@ public:
 
     int size() const noexcept;
 
-    void compound(Stack<T> _stack);
+    void compound(Stack<T>& _stack);
 
 private:
     int MAX_SIZE;
@@ -58,10 +58,10 @@ bool Stack<T>::isEmpty() const noexcept
 template<typename T>
 void Stack<T>::push(T item)
 {
-    if(!isFull()){
+    if(!isFull()) {
         ++head;
         stack[head] = item;
-    }else{
+    } else {
         throw std::logic_error("stack is full");
     }
 }
@@ -78,7 +78,7 @@ template<typename T>
 T Stack<T>::pop()
 {
     if(isEmpty())
-        throw std::logic_error("stack is empty");
+        throw std::logic_error("stack is isEmpty");
     return stack[head--];
 }
 
@@ -87,7 +87,7 @@ T Stack<T>::top() const
 {
     if(!isEmpty())
         return stack[head];
-    throw std::logic_error("stack is empty");
+    throw std::logic_error("stack is isEmpty");
 }
 
 template<typename T>
@@ -97,7 +97,7 @@ int Stack<T>::size() const noexcept
 }
 
 template<typename T>
-void Stack<T>::compound(Stack<T> _stack)
+void Stack<T>::compound(Stack<T>& _stack)
 {
     if(head + 1 + _stack.size() > MAX_SIZE)
         throw std::logic_error("no place for item");

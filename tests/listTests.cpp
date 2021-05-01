@@ -1,4 +1,5 @@
 #include "../src/List.h"
+#include <gtest/gtest.h>
 
 TEST(List, simpleTest)
 {
@@ -14,7 +15,7 @@ TEST(List, constructorTest)
     EXPECT_TRUE(list->front() == 4);
     EXPECT_TRUE(list->back() == 4);
     EXPECT_TRUE(list->getSize() == 1);
-    EXPECT_FALSE(list->empty());
+    EXPECT_FALSE(list->isEmpty());
     delete list;
 }
 
@@ -26,7 +27,7 @@ TEST(List, push_backTest)
     list->push_back(13);
     list->push_back(666);
     EXPECT_TRUE(list->getSize() == 5);
-    EXPECT_FALSE(list->empty());
+    EXPECT_FALSE(list->isEmpty());
     EXPECT_TRUE(list->front() == 6);
     EXPECT_TRUE(list->back() == 666);
     delete list;

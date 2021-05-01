@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdexcept>
+
 template<typename T>
 class List
 {
@@ -24,8 +26,10 @@ public:
     T pop_back();
     T pop(int index);
 
+    void clear() noexcept;
+
     int getSize() const noexcept;
-    bool empty() const noexcept;
+    bool isEmpty() const noexcept;
 
 private:
     class Node
@@ -60,7 +64,7 @@ int List<T>::getSize() const noexcept
 }
 
 template<typename T>
-bool List<T>::empty() const noexcept
+bool List<T>::isEmpty() const noexcept
 {
     return head == nullptr;
 }
@@ -80,7 +84,7 @@ template<typename T>
 T List<T>::front() const
 {
     if(size == 0)
-        throw new std::logic_error("list is empty");
+        throw new std::logic_error("list is isEmpty");
     return head->data;
 }
 
@@ -88,7 +92,7 @@ template<typename T>
 T List<T>::back() const
 {
     if(size == 0)
-        throw new std::logic_error("list is empty");
+        throw new std::logic_error("list is isEmpty");
     Node* temp = head;
     for(int i = 0; i < size - 1; ++i)
         temp = temp->pNext;
@@ -109,7 +113,7 @@ T& List<T>::operator[](const int index)
 template<typename T>
 List<T>::List(const List<T> &list) noexcept
 {
-    if(list.getSize() == 0){
+    if(list.getSize() == 0) {
         size = 0;
         head = nullptr;
     } else {
@@ -171,7 +175,7 @@ template<typename T>
 T List<T>::pop_front()
 {
     if(size == 0)
-        throw new std::logic_error("list is empty");
+        throw new std::logic_error("list is isEmpty");
     --size;
     T temp = head->data;
     Node* node = head;
@@ -185,7 +189,7 @@ template<typename T>
 T List<T>::pop_back()
 {
     if(size == 0)
-        throw new std::logic_error("list is empty");
+        throw new std::logic_error("list is isEmpty");
     --size;
     Node* temp_node = head;
     for(int i = 0; i < size; ++i)
@@ -199,7 +203,7 @@ template<typename T>
 T List<T>::pop(int index)
 {
     if(size == 0)
-        throw new std::logic_error("list is empty");
+        throw new std::logic_error("list is isEmpty");
     if(index < 0 || index >= size)
         throw new std::out_of_range("incorrect size");
     --size;
@@ -211,6 +215,19 @@ T List<T>::pop(int index)
     node->pNext = node->pNext->pNext;
     delete tempNode;
     return temp;
+}
+
+template<typename T>
+void List<T>::clear() noexcept
+{
+    for(int i = 0; i < size; ++i)
+    {
+        Node* temp = head;
+        head = head->pNext;
+        delete temp;
+    }
+    size = 0;
+    head = nullptr;
 }
 
 template<typename T>
