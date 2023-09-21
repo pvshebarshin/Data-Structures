@@ -77,9 +77,26 @@ TEST(AVL_BST, removeTest)
     tree->remove(1);
     tree->remove(999);
 
-
     EXPECT_FALSE(tree->contains(1));
     EXPECT_FALSE(tree->contains(999));
+
+    delete tree;
+}
+
+TEST(AVL_BST, min_maxTest)
+{
+    auto* tree = new AVL_BST<double>(3.14);
+    EXPECT_TRUE(tree->contains(3.14));
+    tree->add(1);
+    tree->add(55);
+    tree->add(-55);
+    tree->add(2.72);
+    tree->add(-0.9999);
+    tree->add(0.0001);
+    tree->add(999);
+
+    EXPECT_EQ(-55, tree->min());
+    EXPECT_EQ(999, tree->max());
 
     delete tree;
 }

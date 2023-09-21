@@ -2,22 +2,27 @@
 #define DATA_STRUCTURES_AVL_BST_H
 
 #include <stdexcept>
+#include <iostream>
 
 template<typename T>
 class AVL_BST
 {
 public:
     AVL_BST() noexcept;
-    AVL_BST(T data) noexcept;
-    ~AVL_BST();
+    explicit AVL_BST(T data) noexcept;
+    ~AVL_BST() noexcept;
+
     // Get the tree's height.
     int getHeight() const noexcept;
+
     // Insert the value into the tree.
     void add(T data);
+
     // Print the tree.
-    void print();
+    void print() const noexcept;
+
     // Remove the value from the tree.
-    void remove(T data);
+    void remove(T data) noexcept;
 
     bool is_empty() const noexcept;
 
@@ -30,11 +35,15 @@ private:
     class Node
     {
     public:
-        Node(T data) noexcept;
+        // Constructor.
+        explicit Node(T data) noexcept;
+
         // Calculate the balance point.
         int getBalance() const noexcept;
+
         // Remove the node's parent.
         void removeParent() noexcept;
+
         // Set the node's height.
         void update_height() noexcept;
 
@@ -45,22 +54,32 @@ private:
         Node* parent;
     };
 
-    Node *root;
+    enum Side
+    {
+        Left,
+        Right
+    };
 
-    void balance_node(Node* node);
+    Node* root;
+
+    void balance_node(Node* node) noexcept;
+
     // Find the node containing the data.
     Node* find_node(T data) const noexcept;
-    // Print the subtree.
-    void printSubtree(Node *subtree, int depth, int offset, bool first);
+
+    // Print subTree
+    void printSubTree(Node* node) const noexcept;
+
     // Rotate the subtree left.
     void left_rotation(Node* node) noexcept;
+
     // Rotate the subtree left.
     void right_rotation(Node* node) noexcept;
+
     // Set the root.
     void set_root(Node* node) noexcept;
-    // Figure out the default spacing for element.
-    int spacing(int offset);
 
+    // Remove node
     void remove(Node* node) noexcept;
 };
 
@@ -83,6 +102,28 @@ int AVL_BST<T>::getHeight() const noexcept
 }
 
 template<typename T>
+void AVL_BST<T>::print() const noexcept
+{
+    if (root != nullptr)
+    {
+        printSubTree(root->left_child);
+        std::cout << ' ';
+        printSubTree(root->right_child);
+    }
+}
+
+template<typename T>
+void AVL_BST<T>::printSubTree(Node* node) const noexcept
+{
+    if (node != nullptr)
+    {
+        printSubTree(node->left_child);
+        std::cout << ' ';
+        printSubTree(node->right_child);
+    }
+}
+
+template<typename T>
 void AVL_BST<T>::add(T data)
 {
     if (root == nullptr) {
@@ -102,7 +143,7 @@ void AVL_BST<T>::add(T data)
                 else
                     temp = temp->right_child;
             else
-                throw new std::logic_error("Element already exists");
+                throw std::logic_error("Element already exists");
 
         temp = added_node;
         while(temp != nullptr)
@@ -115,14 +156,14 @@ void AVL_BST<T>::add(T data)
 }
 
 template<typename T>
-void AVL_BST<T>::balance_node(AVL_BST::Node* node)
+void AVL_BST<T>::balance_node(AVL_BST::Node* node) noexcept
 {
-    int bal = node->getBalance();
-    if (bal > 1) {
+    int balance = node->getBalance();
+    if (balance > 1) {
         if (node->left_child->getBalance() < 0)
             left_rotation(node->left_child);
         right_rotation(node);
-    } else if (bal < -1) {
+    } else if (balance < -1) {
         if (node->right_child->getBalance() > 0)
             right_rotation(node->right_child);
         left_rotation(node);
@@ -132,45 +173,45 @@ void AVL_BST<T>::balance_node(AVL_BST::Node* node)
 template<typename T>
 void AVL_BST<T>::left_rotation(AVL_BST::Node* node) noexcept
 {
-    enum {left, right} side;
-    Node *p = node->parent;
-    if (p != nullptr && p->left_child == node)
-        side = left;
+    Side side;
+    Node *parent = node->parent;
+    if (parent != nullptr && parent->left_child == node)
+        side = Left;
     else
-        side = right;
+        side = Right;
 
     Node *temp = node->right_child;
     node->right_child = temp->left_child;
     temp->left_child = node;
 
-    if (p == nullptr)
+    if (parent == nullptr)
         set_root(temp);
-    else if (side == left)
-        p->left_child = temp;
+    else if (side == Left)
+        parent->left_child = temp;
     else
-        p->right_child = temp;
+        parent->right_child = temp;
 }
 
 template<typename T>
 void AVL_BST<T>::right_rotation(AVL_BST::Node* node) noexcept
 {
-    enum {left, right} side;
-    Node *p = node->parent;
-    if (p != nullptr && p->left_child == node)
-        side = left;
+    Side side;
+    Node *parent = node->parent;
+    if (parent != nullptr && parent->left_child == node)
+        side = Left;
     else
-        side = right;
+        side = Right;
 
     Node *temp = node->left_child;
     node->left_child = temp->right_child;
     temp->right_child = node;
 
-    if (p == nullptr)
+    if (parent == nullptr)
         set_root(temp);
-    else if (side == left)
-        p->left_child = temp;
+    else if (side == Left)
+        parent->left_child = temp;
     else
-        p->right_child = temp;
+        parent->right_child = temp;
 }
 
 template<typename T>
@@ -209,7 +250,7 @@ typename AVL_BST<T>::Node* AVL_BST<T>::find_node(T data) const noexcept
 }
 
 template<typename T>
-AVL_BST<T>::~AVL_BST()
+AVL_BST<T>::~AVL_BST() noexcept
 {
     remove(root);
 }
@@ -230,8 +271,8 @@ void AVL_BST<T>::remove(AVL_BST::Node* node) noexcept
 template<typename T>
 T AVL_BST<T>::min() const
 {
-    if(root == nullptr) {
-        throw new std::logic_error("Tree is is_empty");
+    if (root == nullptr) {
+        throw std::logic_error("Tree is is_empty");
     } else if(root->left_child != nullptr) {
         Node* node = root->left_child;
         while (node->left_child != nullptr)
@@ -244,8 +285,8 @@ T AVL_BST<T>::min() const
 template<typename T>
 T AVL_BST<T>::max() const
 {
-    if(root == nullptr) {
-        throw new std::logic_error("Tree is is_empty");
+    if (root == nullptr) {
+        throw std::logic_error("Tree is is_empty");
     } else if(root->right_child != nullptr) {
         Node* node = root->right_child;
         while (node->right_child != nullptr)
@@ -256,68 +297,65 @@ T AVL_BST<T>::max() const
 }
 
 template<typename T>
-void AVL_BST<T>::remove(T data)
-{
+void AVL_BST<T>::remove(T data) noexcept {
     Node *toBeRemoved = find_node(data);
     if (toBeRemoved == nullptr)
-        throw new std::logic_error("There are no such data tree");
+        return;
 
-    enum {left, right} side;
-    Node* pointer = toBeRemoved->parent;
-    if (pointer != nullptr && pointer->left_child == toBeRemoved)
-        side = left;
+    Side side;
+    Node *parent = toBeRemoved->parent;
+    if (parent != nullptr && parent->left_child == toBeRemoved)
+        side = Left;
     else
-        side = right;
+        side = Right;
 
-    if (toBeRemoved->left_child == nullptr)
+    if (toBeRemoved->left_child == nullptr) {
         if (toBeRemoved->right_child == nullptr) {
-
-            if (pointer == nullptr) {
+            if (parent == nullptr) {
                 set_root(nullptr);
                 delete toBeRemoved;
-
             } else {
-                if (side == left)
-                    pointer->left_child = nullptr;
+                if (side == Left)
+                    parent->left_child = nullptr;
                 else
-                    pointer->right_child = nullptr;
+                    parent->right_child = nullptr;
                 delete toBeRemoved;
-                pointer->update_height();
-                balance_node(pointer);
+                parent->update_height();
+                balance_node(parent);
             }
         } else {
-            if (pointer == nullptr) {
+            if (parent == nullptr) {
                 set_root(toBeRemoved->right_child);
                 delete toBeRemoved;
             } else {
-                if (side == left)
-                    pointer->left_child = toBeRemoved->right_child;
+                if (side == Left)
+                    parent->left_child = toBeRemoved->right_child;
                 else
-                    pointer->right_child = toBeRemoved->right_child;
+                    parent->right_child = toBeRemoved->right_child;
                 delete toBeRemoved;
-                pointer->update_height();
-                balance_node(pointer);
+                parent->update_height();
+                balance_node(parent);
             }
         }
-    else if (toBeRemoved->right_child == nullptr) {
-        if (pointer == nullptr) {
+    } else if (toBeRemoved->right_child == nullptr) {
+        if (parent == nullptr) {
             set_root(toBeRemoved->left_child);
             delete toBeRemoved;
         } else {
-            if(side == left)
-                pointer->left_child = toBeRemoved->left_child;
+            if (side == Left)
+                parent->left_child = toBeRemoved->left_child;
             else
-                pointer->right_child = toBeRemoved->left_child;
+                parent->right_child = toBeRemoved->left_child;
             delete toBeRemoved;
-            pointer->update_height();
-            balance_node(pointer);
+            parent->update_height();
+            balance_node(parent);
         }
     } else {
         Node* replacement;
         Node* replacement_parent;
         Node* temp_node;
-        int bal = toBeRemoved->getBalance();
-        if (bal > 0) {
+        int balance = toBeRemoved->getBalance();
+        if (balance > 0) {
             if (toBeRemoved->left_child->right_child == nullptr) {
                 replacement = toBeRemoved->left_child;
                 replacement->right_child = toBeRemoved->right_child;
@@ -346,12 +384,12 @@ void AVL_BST<T>::remove(T data)
             replacement->left_child = toBeRemoved->left_child;
             replacement->right_child = toBeRemoved->right_child;
         }
-        if (pointer == nullptr)
+        if (parent == nullptr)
             set_root(replacement);
-        else if (side == left)
-            pointer->left_child = replacement;
+        else if (side == Left)
+            parent->left_child = replacement;
         else
-            pointer->right_child = replacement;
+            parent->right_child = replacement;
         delete toBeRemoved;
         balance_node(temp_node);
     }
@@ -372,7 +410,7 @@ void AVL_BST<T>::Node::update_height() noexcept
         if (right_child == nullptr)
             height = 0;
         else
-            height = right_child->height+1;
+            height = right_child->height + 1;
     else if (right_child == nullptr)
         height = left_child->height + 1;
     else if (left_child->height > right_child->height)
