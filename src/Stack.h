@@ -5,7 +5,7 @@ template<typename T>
 class Stack
 {
 public:
-    Stack(int size = 1024);
+    explicit Stack(int size = 1024);
     ~Stack() noexcept;
 
     void push(T item);
